@@ -4,10 +4,14 @@ from collections import deque
 import numpy as np
 
 
+def is_valid(sample):
+    pass
+
+
 def poisson_disc_sampling(radius: float, sample_region_size: np.ndarray, sample_rejection_threshold: int):
     sampling_space_dimension = sample_region_size.shape[0]
     N = sampling_space_dimension
-    cell_size: float = radius/np.sqrt(N)
+    cell_size: float = radius / np.sqrt(N)
 
     grid_shape = sample_region_size // cell_size
     # contains indexes of points in the 'points' list
@@ -18,14 +22,22 @@ def poisson_disc_sampling(radius: float, sample_region_size: np.ndarray, sample_
     initial_sample = np.random.rand(*sample_region_size, 1) * sample_region_size
     active_points.append(initial_sample)
 
+    sample_found = False
+
     while len(active_points) > 0:
         random_sample = np.random.choice(active_points)
         for _ in range(sample_rejection_threshold):
+            sample_candidate = random_sample + __get_random_n_dim_vector(N, radius, 2 * radius)
+            if is_valid(sample_candidate):
+                points.append(sample_candidate)
+                active_points.append(sample_candidate)
+                grid[[int(x) for x in sample_candidate / cell_size]] = len(points) - 1
+                sample_found = True
+        if not sample_found:
+            active_points.remove(random_sample)
 
-            sample_candidate = random_sample
 
-
-def __get_random_n_dim_vector(dimension ,min_length, max_length):
+def __get_random_n_dim_vector(dimension, min_length, max_length):
     # need n-1 angles, all in range [0; PI] except the last one which is in range [0; 2*PI]
     random_angles = [*(np.random.rand(dimension - 2) * np.pi), np.random.rand() * 2 * np.pi]
     length = np.random.uniform(min_length, max_length)
