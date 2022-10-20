@@ -1,5 +1,6 @@
 from itertools import product
 from typing import List
+
 import numpy as np
 
 Point = np.ndarray
@@ -8,12 +9,14 @@ ListOfPoints = List[np.ndarray]
 NDimArray = np.ndarray
 
 
-def _is_sample_valid(sample: Point,
-                     sample_region_size: Shape,
-                     grid: NDimArray,
-                     cell_size: float,
-                     radius: float,
-                     points: ListOfPoints) -> bool:
+def _is_sample_valid(
+        sample: Point,
+        sample_region_size: Shape,
+        grid: NDimArray,
+        cell_size: float,
+        radius: float,
+        points: ListOfPoints
+) -> bool:
     if any(sample < 0) or any(sample > sample_region_size):
         return False
 
