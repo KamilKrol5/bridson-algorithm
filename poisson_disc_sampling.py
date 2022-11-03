@@ -61,32 +61,32 @@ def poisson_disc_sampling(radius: float, sample_domain_size: Shape, sample_rejec
     is at least the radius. The sampling is done using Bridson algorithm. This implementation supports sampling
     in n-dimensional spaces.
 
-        Parameters
-        ----------
-        radius : float
-            The minimum distance between points.
+    Parameters
+    ----------
+    radius : float
+        The minimum distance between points.
 
-        sample_domain_size : ndarray
-            An array with dimensions of sampling domain. For example if [X, Y] array is provided,
-            the sampling space has 2 dimensions and is a X x Y rectangle. If [X, Y, Z] is provided the
-            sampling space is X x Y x Z cuboid. In general n-dimensional domains are supported.
+    sample_domain_size : ndarray
+        An array with dimensions of sampling domain. For example if [X, Y] array is provided,
+        the sampling space has 2 dimensions and is a X x Y rectangle. If [X, Y, Z] is provided the
+        sampling space is X x Y x Z cuboid. In general n-dimensional domains are supported.
 
-        sample_rejection_threshold : int, optional
-            The number which defines how much samples from the neighbourhood of a given point is tested.
-            Default is 30.
+    sample_rejection_threshold : int, optional
+        The number which defines how much samples from the neighbourhood of a given point is tested.
+        Default is 30.
 
-        Returns
-        -------
-        points : List[ndarray]
-            A list of samples (points).
+    Returns
+    -------
+    points : List[ndarray]
+        A list of samples (points).
 
-        Notes
-        -----
-        If the sample_rejection_threshold parameter is too low, the points may not be distributed evenly.
-        There may be even some large free spaces. The default is set to be 30 - it value recommended
-        by the algorithm's author - Robert Bridson. More information in the paper linked below.
-        https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
-           """
+    Notes
+    -----
+    If the sample_rejection_threshold parameter is too low, the points may not be distributed evenly.
+    There may be even some large free spaces. The default is set to be 30 - it value recommended
+    by the algorithm's author - Robert Bridson. More information in the paper linked below.
+    https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph07-poissondisk.pdf
+    """
     dimension = sample_domain_size.shape[0]
 
     cell_size: float = radius / np.sqrt(dimension)
